@@ -20,6 +20,8 @@ public interface AuthService {
     //로그아웃
     void logout(String accessToken);
 
+    //회원탈퇴
+    void withdraw(String accessToken);
 
     User getUser();
 

@@ -50,4 +50,18 @@ public class AuthController {
         return ResponseEntity.badRequest().body("유효하지 않은 토큰입니다.");
     }
 
+    @PatchMapping("/withdraw")
+    public ResponseEntity<String> withdraw(HttpServletRequest request){
+
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String accessToken = authHeader.substring(7); // "Bearer "를 제거
+
+            // 서비스 호출
+            authService.withdraw(accessToken);
+            return ResponseEntity.ok("회원 탈퇴되었습니다.");
+        }
+        return ResponseEntity.badRequest().body("유효하지 않은 토큰입니다.");
+    }
+
 }

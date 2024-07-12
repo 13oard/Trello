@@ -102,4 +102,18 @@ public class AuthServiceImpl implements AuthService {
         user.updateRefreshToken(null);
         userRepository.save(user);
     }
+
+    @Override
+    public void withdraw(String accessToken){
+        String username = JwtUtil.getUsernameFromToken(accessToken);
+        if(username == null){
+            throw new IllegalArgumentException("유효하지 않은 토큰입니다");
+        }
+
+        User user = userRepository.findByName(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다"));
+
+        userRepository.delete(user);
+    }
+
 }
